@@ -7,5 +7,6 @@ group :test do
   gem 'dm-postgres-adapter'
   gem 'capybara'
   gem 'rspec'
+  gem 'sinatra'
 
 end
