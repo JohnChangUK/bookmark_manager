@@ -12,4 +12,5 @@ feature 'Viewing links' do
       expect(page).to have_content('Facebook')
     end
   end
+
 end
