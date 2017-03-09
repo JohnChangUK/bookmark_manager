@@ -11,4 +11,9 @@ class Link
   property :title, String
   property :url, String
 
+  # def check_tag(tag)
+  #   true if self.tag == tag
+  #
+  # end
+
 end
