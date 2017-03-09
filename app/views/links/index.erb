@@ -11,7 +11,8 @@
 
 <a href="links/new" class="button" >Add Link</a>
 
-<form action="/links/filter" method="POST">
+<form action="/tags/:name" method="post">
+  <label for="filter">Filter</label>
   <input type="text" name="filter"  />
-  <input type="submit" value="Filter" />
+  <input class="button" type="submit" value="Filter" />
 </form>
