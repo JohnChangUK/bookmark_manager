@@ -3,7 +3,7 @@ feature 'Creating Links' do
     visit '/links/new'
     fill_in 'url', with: 'https://facebook.com/'
     fill_in 'title', with: 'Welcome to Facebook'
-    click_button 'Create Link'
+    click_button 'Create link'
 
     expect(current_path).to eq '/links'
 
