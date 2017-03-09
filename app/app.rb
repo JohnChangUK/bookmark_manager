@@ -26,7 +26,7 @@ class BookmarkManager < Sinatra::Base
     redirect to ('/links')
 end
 
-get '/tags/:name' do
+post '/tags/filter' do
   tag = Tag.first(name: params[:name])
   @links = tag ? tag.links : []
   erb :'links/index'
