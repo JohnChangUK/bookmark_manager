@@ -8,6 +8,8 @@ require_relative 'data_mapper_setup'
 
 class BookmarkManager < Sinatra::Base
 
+  enable :sessions
+
   get '/links' do
     @links = Link.all
     erb :'links/index'
@@ -26,10 +28,16 @@ class BookmarkManager < Sinatra::Base
     redirect to ('/links')
 end
 
-post '/tags/filter' do
-  tag = Tag.first(name: params[:name])
+post '/links/filter' do
+  session['filter'] = params[:name]
+  redirect '/tags/filter'
+end
+
+get '/tags/filter' do
+  tag = Tag.first(name: session['filter'])
   @links = tag ? tag.links : []
   erb :'links/index'
 end
+
 
 end
