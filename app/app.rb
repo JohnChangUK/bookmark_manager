@@ -11,6 +11,11 @@ class BookmarkManager < Sinatra::Base
   enable :sessions
   set :session_secret, 'super_secret'
 
+  get '/' do 
+    "Welcome to BookmarkManager" 
+    erb :home
+  end 
+
   get '/links' do
     @links = Link.all
     erb :'links/index'
@@ -38,6 +43,12 @@ class BookmarkManager < Sinatra::Base
   get '/users/new' do
     erb :'users/new'
   end
+
+  post '/users' do 
+    User.create(email: params[:email],
+    password: params[:password])
+    redirect to '/links' 
+  end 
 
   post '/users' do
     user = User.create(email: params[:email],
