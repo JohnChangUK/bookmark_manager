@@ -8,9 +8,15 @@
     <% if current_user %>
       Welcome, <%= current_user.email %>
     <% end %>
-    <% if flash[:notice] %>
-    <div id='notice'><%= flash[:notice]%></div>
+    <% if flash[:errors] && !flash[:errors].empty? %>
+    Please refer to the errors below:
+    <ul id='errors'>
+    <% flash[:errors].each do |error| %>
+    <li><%= error %></li>
+    <!-- <div id='notice'><%= flash[:notice]%></div> -->
     <% end %>
+    </ul>
+    <%end%>
     <%= yield %>  <!-- this then yields to the view which has been called by your controller -->
   </body>
 </html>
