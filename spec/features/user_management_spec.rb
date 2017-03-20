@@ -2,8 +2,8 @@ require 'web_helper'
 require './app/models/user'
 
   def sign_up(email: 'john@makers.com',
-              password: '12345678',
-              password_confirmation: '12345678')
+              password: '123',
+              password_confirmation: '123')
     visit '/users/new'
     fill_in :email, with: email
     fill_in :password, with: password
@@ -28,11 +28,18 @@ feature 'User sign up' do
     expect { sign_up(password_confirmation: 'wrong') }.not_to change(User, :count)
   end
 
-
-
   scenario 'with a password that does not match' do 
     expect {sign_up(password_confirmation: 'wrong') }.not_to change(User, :count)
     expect(current_path).to eq('/users')
     expect(page).to have_content 'Password and confirmation password do not match'
   end 
+
+  scenario "I can't sign up without an email address" do 
+    expect {sign_up(email:nil) }.not_to change(User, :count)
+  end 
+
+  scenario "I can't sign up with an invalid email address" do
+    expect { sign_up(email: "invalid@email") }.not_to change(User, :count)
+  end
+  
 end
