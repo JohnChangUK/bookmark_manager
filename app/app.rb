@@ -15,7 +15,7 @@ class BookmarkManager < Sinatra::Base
   register Sinatra::Flash
 
   get '/' do 
-    "Welcome to BookmarkManager" 
+    "Welcome to BookmarkManager"  
     erb :home
   end 
 
@@ -28,14 +28,14 @@ class BookmarkManager < Sinatra::Base
     erb :'links/new'
   end
 
-  post '/links' do
-    link = Link.create(url: params[:url], title: params[:title])
-    params[:tags].split.each do |tag|
+ post '/links' do 
+  link = Link.create(url: params[:url], title: params[:title])
+  params[:tags].split.each do |tag|
     link.tags << Tag.first_or_create(name: tag)
-    end
-    link.save
-    redirect '/links'
-  end
+  end 
+  link.save
+  redirect '/links'
+ end 
 
   get '/tags/:name' do
     tag = Tag.first(name: params[:name])
@@ -45,36 +45,37 @@ class BookmarkManager < Sinatra::Base
 
   get '/users/new' do
     @user = User.new
-    erb :'users/new'
+  erb :'users/new'
   end
 
-   post '/users' do
-    @user = User.create(email: params[:email],
-                       password: params[:password],
-                       password_confirmation: params[:password_confirmation])
+  post '/users' do 
+    @user = User.create(email: params[:email], 
+                password: params[:password],
+                password_confirmation: params[:password_confirmation])
     if @user.save
-    session[:user_id] = @user.id
-    redirect to('/')
+    session[:user_id] == @user.id
+    redirect '/links'
   else 
-    flash.now[:errors] = @user.errors.full_messages
+     flash.now[:errors] = @user.errors.full_messages
     erb :'users/new'
-  end
-end 
-
+  end 
+end
+  
   get '/sessions/new' do 
     erb :'sessions/new'
+  end 
+
+  post '/sessions' do 
+    user = User.authenticate(params[:email], params[:password])
+    if user 
+      session[:user_id] = user.id 
+      redirect '/links'
+    else 
+      flash.now[:errors] = ['The email or password is incorrect']
+      erb :'sessions/new'
     end 
 
-    post '/sessions' do 
-      user = User.authenticate(params[:email], params[:password])
-      if user 
-        session[:user_id] = user_id
-        redirect to('/links')
-      else 
-        flash.now[:errors] = ['The email or password is incorrect']
-        erb :'sessions/new'
-      end 
-    end 
+  end 
 
   helpers do
     def current_user

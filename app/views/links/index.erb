@@ -1,5 +1,12 @@
 <h1>Links</h1>
 
+<% if current_user %>
+      Welcome, <%= current_user.email %>
+      <% end %>
+
+  <% if @links.length == 0 %>
+  No links found 
+  <% end %> 
   <ul id='links'>
     <% @links.each do |link| %>
       <li>
@@ -16,3 +23,7 @@
   <input type="text" name="filter"  />
   <input class="button" type="submit" value="Filter" />
 </form>
+
+ 
+      
+   
